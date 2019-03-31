@@ -8,10 +8,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.security.KeyStore;
+import java.util.ArrayList;
 
 import javax.net.ssl.SSLSocketFactory;
 
 import GUI.ClientGUI;
+import Model.Ball;
 import Model.Game;
 import Model.User;
 /**
@@ -47,6 +49,8 @@ public class Client {
 	private ClientServerComunication serverThread;
 	
 	private ClientGUI clientFrame;
+	
+	private ArrayList<Ball> eatenBalls;
 //	private char[] password = {'v','i','e','j','i','t', 'o'};
 	
 	public Client(ClientGUI clientFrame, String nickname, String e_mail, String password)
@@ -90,6 +94,22 @@ public class Client {
 		}
 	}
 	
+	public ClientGUI getClientFrame() {
+		return clientFrame;
+	}
+
+	public ArrayList<Ball> getEatenBalls() {
+		return eatenBalls;
+	}
+
+	public void setClientFrame(ClientGUI clientFrame) {
+		this.clientFrame = clientFrame;
+	}
+
+	public void setEatenBalls(ArrayList<Ball> eatenBalls) {
+		this.eatenBalls = eatenBalls;
+	}
+
 	public User getUser() {
 		return user;
 	}

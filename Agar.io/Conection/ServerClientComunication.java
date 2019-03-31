@@ -1,5 +1,6 @@
 package Conection;
 
+import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import GUI.ClientGUI;
 import Model.Ball;
@@ -121,9 +123,61 @@ public class ServerClientComunication extends Thread{
 					out.writeDouble(actualFood.getSpeed());
 				}
 				in = new DataInputStream(socket.getInputStream());	
-				String posUser = in.readUTF();	
-				System.out.println(posUser);
-				user.getBall().setPos(new Vec2(posUser.charAt(0), posUser.charAt(1))); 
+//				String[] posUser = in.readUTF().split(",");	
+//				System.out.println(posUser);
+//				user.getBall().setPos(new Vec2((Double.parseDouble(posUser[0])), Double.parseDouble(posUser[1]))); 
+//				//Bolas comidas
+//				int eatenFood = in.readInt();
+//				ArrayList<Ball> comidaServer = server.getGame().getArrFood();
+//				synchronized (comidaServer) 
+//				{
+//					for (int i = 0; i < eatenFood; i++)
+//					{
+//						//Ball 
+//						Vec2 pos = new Vec2(in.readDouble(), in.readDouble());
+//						Color color = new Color(in.readInt());
+//						Double radius = in.readDouble();
+//						Double speed = in.readDouble();
+//						
+//						Ball actualBall = new Ball(pos.getX(), pos.getY(), color, radius);
+//						comidaServer.remove(actualBall);
+//					}
+//				}
+				synchronized (server.getGame().getArrFood())
+				{
+					int ModifiedFoodNumber = in.readInt();
+					ArrayList<Ball> newArrFood = new ArrayList<>();
+					for (int i = 0; i < ModifiedFoodNumber; i++)
+					{
+						//Ball 
+						Vec2 pos = new Vec2(in.readDouble(), in.readDouble());
+						Color color = new Color(in.readInt());
+						Double radius = in.readDouble();
+						Double speed = in.readDouble();
+						
+						Ball actualBall = new Ball(pos.getX(), pos.getY(), color, radius);
+						
+					}
+					ArrayList<Ball> serverFood = server.getGame().getArrFood();
+					for (int i = 0; i < serverFood.size(); i++) 
+					{
+						boolean estaEnElCliente = false;
+						int indexRemoval = 0;
+						for (int j = 0; j < newArrFood.size() && !estaEnElCliente; j++)
+						{
+							if(serverFood.get(i).getPos().getX() == newArrFood.get(j).getPos().getX() 
+								&& serverFood.get(i).getPos().getY() == newArrFood.get(j).getPos().getY())
+							{
+								estaEnElCliente = true;
+								indexRemoval = j;
+							}
+						}
+						if(!estaEnElCliente)
+						{
+							serverFood.remove(newArrFood.get(indexRemoval));
+						}
+					}
+				}
 //				System.out.println("11");
 //				System.out.println("12");
 //				in = new ObjectInputStream(socket.getInputStream());

@@ -26,7 +26,6 @@ public class ClientGUI extends JFrame implements ActionListener{
 	private JButton btnLogIn;
 	private JButton btnRegister;
 	private LogInPane logIn;
-	private Game model;
 	private Client client;
 
 	
@@ -54,6 +53,7 @@ public class ClientGUI extends JFrame implements ActionListener{
 		add(logIn,BorderLayout.CENTER);
 		add(aux,BorderLayout.SOUTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 		pack();
 	}
 	public void initialization(String signInorRegister) {
@@ -152,7 +152,6 @@ public class ClientGUI extends JFrame implements ActionListener{
 		this.client = client;
 		System.out.println("se asignó el cliente a la interfaz");
 		
-		this.model = client.getGame();
 		remove(logIn);
 		remove(aux);
 		draw=new Draw(this);
@@ -162,11 +161,6 @@ public class ClientGUI extends JFrame implements ActionListener{
 		pack();
 		setSize(ANCHO,LARGO);
 	}
-	
-	public Game getModel(){
-		return model;
-	}
-	
 	public Point mousePos() {
 		return draw.mousePos();
 	}
@@ -214,11 +208,6 @@ public class ClientGUI extends JFrame implements ActionListener{
 	public void setLogIn(LogInPane logIn) {
 		this.logIn = logIn;
 	}
-
-	public void setModel(Game model) {
-		this.model = model;
-	}
-
 	public void setClient(Client client) {
 		this.client = client;
 	}

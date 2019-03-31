@@ -136,7 +136,32 @@ public class ClientServerComunication extends Thread{
 //				client.setGame(game);
 //				System.out.println("7");
 				System.out.println(client.getUser().getBall().getPos().getX() + "," + client.getUser().getBall().getPos().getY());
-				out.writeUTF(client.getUser().getBall().getPos().getX() + "" + client.getUser().getBall().getPos().getY());
+				out.writeUTF(client.getUser().getBall().getPos().getX() + "," + client.getUser().getBall().getPos().getY());
+				//Envio de bolas comidas
+//				int eatenBalls = client.getEatenBalls().size();
+//				out.writeInt(eatenBalls);
+//				for (int i = 0; i < eatenBalls; i++)
+//				{
+//					//Eaten Ball 
+//					Ball actualBall = client.getEatenBalls().get(i);
+//					out.writeDouble(actualBall.getPos().getX());
+//					out.writeDouble(actualBall.getPos().getY());
+//					out.writeInt(actualBall.getColor().getRGB());
+//					out.writeDouble(actualBall.getRadius());
+//					out.writeDouble(actualBall.getSpeed());
+//				}
+				int modifiedfoodNumber = client.getGame().getArrFood().size();
+				out.writeInt(modifiedfoodNumber);
+				for (int i = 0; i < modifiedfoodNumber; i++) 
+				{
+					//Ball
+					Ball actualFood = client.getGame().getArrFood().get(i);
+					out.writeDouble(actualFood.getPos().getX());
+					out.writeDouble(actualFood.getPos().getY());
+					out.writeInt(actualFood.getColor().getRGB());
+					out.writeDouble(actualFood.getRadius());
+					out.writeDouble(actualFood.getSpeed());
+				}
 				//System.out.println("8");
 				
 			} catch (IOException e) {

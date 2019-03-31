@@ -37,8 +37,8 @@ public class Draw extends JPanel implements MouseMotionListener{
 		thread=new BallThread(main, main.getClient().getUser().getBall());
 		thread.start();
 		player = main.getClient().getUser().getBall();
-		food = main.getModel().getArrFood();
-		enemies = main.getModel().getArrUsers();
+		food = main.getClient().getGame().getFood();
+		enemies = main.getClient().getGame().getArrUsers();
 	}
 	
 	@Override
@@ -57,19 +57,33 @@ public class Draw extends JPanel implements MouseMotionListener{
 		g2.setColor(Color.BLACK);
 		g2.setFont(new Font("Arial", Font.PLAIN, 30));
 		g2.drawString("Puntaje: "+(int)player.getRadius(), 20, 40);
-		
-		for(int i=0;i<food.size();i++) {
-			Ball actual=food.get(i);
-			g2.setColor(actual.getColor());
-			g2.fillOval((int)actual.getPosX(), (int)actual.getPosY(), (int)actual.getRadius(), (int)actual.getRadius());
+		synchronized (food) 
+		{
+			for(int i=0;i<food.size();i++) {
+				if(player.eat(player.getPos(), food.get(i)))
+				{
+					try
+					{
+						main.getClient().getEatenBalls().add(food.get(i));
+						main.getClient().getGame().getArrFood().remove(food.get(i));
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+					
+				}
+				Ball actual=food.get(i);
+				g2.setColor(actual.getColor());
+				g2.fillOval((int)actual.getPosX(), (int)actual.getPosY(), (int)actual.getRadius(), (int)actual.getRadius());
+			}
 		}
+		
 		for (int i = 0; i < enemies.size(); i++)
 		{
 			Ball actual= enemies.get(i).getBall();
 			g2.setColor(actual.getColor());
 			g2.fillOval((int)actual.getPosX(), (int)actual.getPosY(), (int)actual.getRadius(), (int)actual.getRadius());
 		}
-		
+		System.out.println("je");
 	}
 	
 	
