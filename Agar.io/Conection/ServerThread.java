@@ -13,6 +13,12 @@ public class ServerThread extends Thread{
 	@Override
 	public void run() {
 		super.run();
+		try {
+			server.getUsersAsignation().join();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		while(true) {
 			while(!server.getUsersAsignation().isAlive())
 			{

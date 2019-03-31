@@ -57,12 +57,14 @@ public class ServerClientComunication extends Thread{
 	@Override
 	public void run()
 	{
+		
 		DataInputStream in;
 		DataOutputStream out;
 //		ObjectInputStream in;
 //		ObjectOutputStream out;
 		try 
 		{
+			server.getUsersAsignation().join();
 			while(isConected) 
 			{
 				while(server.getLobby().isAlive())

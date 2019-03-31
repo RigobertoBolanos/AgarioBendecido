@@ -74,6 +74,7 @@ public class UsersAssignationThread extends Thread{
 					ServerClientComunication clientThread = new ServerClientComunication(server, socket, newUser);
 					System.out.println("8");
 					server.getClientsThreads().add(clientThread);
+					clientThread.start();
 					System.out.println("9");
 					out.writeUTF("You're connected");
 					System.out.println("10");
@@ -93,9 +94,9 @@ public class UsersAssignationThread extends Thread{
 			e.printStackTrace();
 		}
 		server.getGame().assignUsersBalls();
-		for (ServerClientComunication clientThread : server.getClientsThreads()) 
-		{
-			clientThread.start();
-		}
+//		for (ServerClientComunication clientThread : server.getClientsThreads()) 
+//		{
+//			clientThread.start();
+//		}
 	}
 }
