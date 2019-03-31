@@ -120,7 +120,8 @@ public class ServerClientComunication extends Thread{
 				}
 				in = new DataInputStream(socket.getInputStream());	
 				String posUser = in.readUTF();	
-				user.getBall().setPos(new Vec2(posUser.charAt(0), posUser.charAt(1)));
+				System.out.println(posUser);
+				user.getBall().setPos(new Vec2(posUser.charAt(0), posUser.charAt(1))); 
 //				System.out.println("11");
 //				System.out.println("12");
 //				in = new ObjectInputStream(socket.getInputStream());

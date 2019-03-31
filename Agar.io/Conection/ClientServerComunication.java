@@ -114,7 +114,7 @@ public class ClientServerComunication extends Thread{
 				game.setArrFood(food);
 				game.setArrUsers(arrUsers);
 				client.setGame(game);
-				System.out.println("9");
+				//System.out.println("9");
 				//System.out.println("Se recibee el mundo");
 				for (User b : client.getGame().getArrUsers()) 
 				{
@@ -123,6 +123,7 @@ public class ClientServerComunication extends Thread{
 						client.setUser(b);
 					}
 				}
+				client.getGame().getArrUsers().remove(client.getUser());
 				//System.out.println("10");
 				isGameReady = true;
 				//System.out.println("3");
@@ -134,6 +135,7 @@ public class ClientServerComunication extends Thread{
 //				System.out.println("6");
 //				client.setGame(game);
 //				System.out.println("7");
+				System.out.println(client.getUser().getBall().getPos().getX() + "," + client.getUser().getBall().getPos().getY());
 				out.writeUTF(client.getUser().getBall().getPos().getX() + "" + client.getUser().getBall().getPos().getY());
 				//System.out.println("8");
 				

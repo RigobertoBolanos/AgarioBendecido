@@ -14,6 +14,10 @@ public class ServerThread extends Thread{
 	public void run() {
 		super.run();
 		while(true) {
+			while(!server.getUsersAsignation().isAlive())
+			{
+				
+			}
 			server.eat();
 			try {
 				Thread.sleep(10);

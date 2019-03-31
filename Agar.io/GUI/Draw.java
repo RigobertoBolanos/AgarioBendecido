@@ -13,6 +13,7 @@ import javax.swing.*;
 import Conection.Client;
 import Conection.Server;
 import Model.BallThread;
+import Model.User;
 import Model.Ball;
 
 
@@ -23,6 +24,7 @@ public class Draw extends JPanel implements MouseMotionListener{
 	private Point mouse;
 	private Ball player;
 	ArrayList<Ball> food;
+	private ArrayList<User> enemies;
 	//private double scale;
 	
 	public Draw(ClientGUI main) {
@@ -36,6 +38,7 @@ public class Draw extends JPanel implements MouseMotionListener{
 		thread.start();
 		player = main.getClient().getUser().getBall();
 		food = main.getModel().getArrFood();
+		enemies = main.getModel().getArrUsers();
 	}
 	
 	@Override
@@ -57,6 +60,12 @@ public class Draw extends JPanel implements MouseMotionListener{
 		
 		for(int i=0;i<food.size();i++) {
 			Ball actual=food.get(i);
+			g2.setColor(actual.getColor());
+			g2.fillOval((int)actual.getPosX(), (int)actual.getPosY(), (int)actual.getRadius(), (int)actual.getRadius());
+		}
+		for (int i = 0; i < enemies.size(); i++)
+		{
+			Ball actual= enemies.get(i).getBall();
 			g2.setColor(actual.getColor());
 			g2.fillOval((int)actual.getPosX(), (int)actual.getPosY(), (int)actual.getRadius(), (int)actual.getRadius());
 		}
